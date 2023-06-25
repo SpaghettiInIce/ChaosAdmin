@@ -3304,7 +3304,8 @@ end
      running = false
  end
 
- cmd.add({"rizz"}, {"rizz", "rizz up on people"}, function()
+ cmd.add({"rizzup"}, {"rizzup", "rizz up on people"}, function()
+ wait(0.3)
  RandomRizz()
  end)
 
