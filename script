@@ -6673,7 +6673,7 @@ end
     on = true
     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 25
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
-    game.Workspace.Gravity = 2
+    game.Workspace.Gravity = 5
     wait(0.075)
     game.Players.LocalPlayer.Character.Animate.Disabled = true
     wait(0.05)
