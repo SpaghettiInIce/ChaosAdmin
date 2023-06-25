@@ -15636,6 +15636,7 @@ end
  	 end
  end
 
+local player = game.Players.LocalPlayer
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
@@ -15653,36 +15654,53 @@ local function onCharacterAdded(character)
 	speaker.CameraMaxZoomDistance = 400
 	speaker.CameraMode = "Classic"
 	speaker.Character.Head.Anchored = false
-	wait(0.25)
-    SetAnim(animation)
-	game.Players.LocalPlayer.Character.Humanoid.JumpHeight = .001
-	game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-	wait(.1)
-	game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
+	if player.Character and player.Character:FindFirstChild("Humanoid") then
+	    local humanoid = player.Character.Humanoid
+	    if humanoid.RigType == Enum.HumanoidRigType.R15 then
+	        -- Your code here: This code will only execute if the player's RigType is R15
+			wait(0.25)
+		    SetAnim(animation)
+			game.Players.LocalPlayer.Character.Humanoid.JumpHeight = .001
+			game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+			wait(.1)
+			game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
+	    end
+	end
+
     loadstring(game:HttpGet("https://pastebin.com/raw/ZvL4ptJi"))()
 end
-
-SetAnim(animation)
-game.Players.LocalPlayer.Character.Humanoid.JumpHeight = .001
-game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-wait(.1)
-game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
+if player.Character and player.Character:FindFirstChild("Humanoid") then
+    local humanoid = player.Character.Humanoid
+    if humanoid.RigType == Enum.HumanoidRigType.R15 then
+        -- Your code here: This code will only execute if the player's RigType is R15
+		SetAnim(animation)
+		game.Players.LocalPlayer.Character.Humanoid.JumpHeight = .001
+		game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+		wait(.1)
+		game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
+    end
+end
 
 LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 
-
  cmd.add({"anim", "animation", "setanim"}, {"anim <id> (animation, setanim", "Change your Animation"}, function(...)
      animation = (...)
-     if animation then
-	     SetAnim("None")
-	     oldjp = game.Players.LocalPlayer.Character.Humanoid.JumpHeight
-	     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 0.001
-	     wait(0.01)
-	     game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-	 	 wait(0.01)
-	     SetAnim(animation)
-         writefile("Digital_Chaos_Admin\\Animation.txt", animation)
-	     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = oldjp
+	 if player.Character and player.Character:FindFirstChild("Humanoid") then
+	 local humanoid = player.Character.Humanoid
+	     if humanoid.RigType == Enum.HumanoidRigType.R15 then
+	         -- Your code here: This code will only execute if the player's RigType is R15
+		     if animation then
+			     SetAnim("None")
+			     oldjp = game.Players.LocalPlayer.Character.Humanoid.JumpHeight
+			     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 0.001
+			     wait(0.01)
+			     game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+			 	 wait(0.01)
+			     SetAnim(animation)
+		         writefile("Digital_Chaos_Admin\\Animation.txt", animation)
+			     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = oldjp
+			 end
+	     end
 	 end
  end)
 
