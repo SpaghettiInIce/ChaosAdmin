@@ -90,22 +90,12 @@ else
 end
 
 local function processKey(key)
-    if key == "Beta.Login:F5B7H3J9E2A1G6C8D4I7" then
-        feedbackLabel.Text = "Correct Key"
-        feedbackLabel.TextColor3 = Color3.new(0, 1, 0) -- Set text color to green for correct key
-        wait(2)
-        correctKey = true
-        gui:Destroy()
-        writefile("Digital_Chaos_Admin\\Login\\Key.txt", 'KeylessLogin:Beta.Login:F5B7H3J9E2A1G6C8D4I7')
-    elseif leftTries ~= 0 then
-        feedbackLabel.Text = "Wrong Key, remaining attempts: " .. leftTries .. ""
-        feedbackLabel.TextColor3 = Color3.new(1, 0, 0) -- Set text color to red for wrong key
-        Notify({Description = "Wrong Key! You have " .. leftTries .. " Attempts remaining";Title = "Digital Chaos Admin";Duration = 5;});
-        leftTries = leftTries - 1
-    else
-    	Notify({Description = "You didn't provide a valid Key!";Title = "Digital Chaos Admin";Duration = 5;});
-    	gui:Destroy()
-    end
+    feedbackLabel.Text = "Correct Key"
+    feedbackLabel.TextColor3 = Color3.new(0, 1, 0) -- Set text color to green for correct key
+    wait(2)
+    correctKey = true
+    gui:Destroy()
+    writefile("Digital_Chaos_Admin\\Login\\Key.txt", 'KeylessLogin:Beta.Login:F5B7H3J9E2A1G6C8D4I7')
 end
 
 enterButton.MouseButton1Click:Connect(function()
