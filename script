@@ -6670,8 +6670,6 @@ end
  -- Toggle flying on/off based on 'on' variable
   if on == false then
     on = true
-    wait(0.1)
-    SetAnim("None")
     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 25
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
     game.Workspace.Gravity = 2
@@ -6692,7 +6690,6 @@ end)
  on = false
  game.Players.LocalPlayer.Character.Animate.Disabled = false
  unmobilefly()
- SetAnim(animation)
  end)
  
  local flyPart
