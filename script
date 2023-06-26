@@ -1,4 +1,7 @@
- local Players = game:GetService("Players")
+-- Notification library
+local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/FilteringEnabled/FE/main/notificationtest"))();
+local Notify = Notification.Notify;
+local Players = game:GetService("Players")
 
  -- Waits until game is loaded
  local game = game
