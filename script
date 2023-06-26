@@ -154,6 +154,7 @@ end
  
  -- [[ Version ]] -- 
  currentversion = "Beta"
+ local prefix = opt.prefix 
  
  --[[ VARIABLES ]]--
  PlaceId, JobId = game.PlaceId, game.JobId
@@ -890,7 +891,6 @@ end
  Description = "Prefix set to " .. PrefixChange .. "";
  Title = "Digital Chaos Admin";
  Duration = 5;
- 
  });
  end
  end)
@@ -15298,19 +15298,36 @@ end
  end
  coroutine.wrap(PZORYLB_fake_script)()
  
- TextClickButton.MouseButton1Click:Connect(function()
-	 gui.barSelect()
-         if textclickbutton.Text == "Click ->   DCA                  " then
-	         TextClickButton.TextWrapped = true
-	         textclickbutton.Text = "DCA"
-         end
-		 cmdInput.Text = ''
-		 cmdInput:CaptureFocus()
-		 for i=1,10 do
-			 wait(0.000051)
-		  game.Players.LocalPlayer.PlayerGui.boomb.Frame.BackgroundTransparency -= 0.04
-			 end
- end)
+TextClickButton.MouseButton1Click:Connect(function()
+    gui.barSelect()
+    if textclickbutton.Text == "Click ->   DCA                  " then
+        TextClickButton.TextWrapped = true
+        textclickbutton.Text = "DCA"
+    end
+    cmdInput.Text = ''
+    cmdInput:CaptureFocus()
+    for i = 1, 10 do
+        wait(0.000051)
+        game.Players.LocalPlayer.PlayerGui.boomb.Frame.BackgroundTransparency -= 0.04
+    end
+end)
+
+-- Add a new InputBegan event function to handle key presses
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.RightControl then
+	    gui.barSelect()
+	    if textclickbutton.Text == "Click ->   DCA                  " then
+	        TextClickButton.TextWrapped = true
+	        textclickbutton.Text = "DCA"
+	    end
+	    cmdInput.Text = ''
+	    cmdInput:CaptureFocus()
+	    for i = 1, 10 do
+	        wait(0.000051)
+	        game.Players.LocalPlayer.PlayerGui.boomb.Frame.BackgroundTransparency -= 0.04
+	    end
+    end
+end)
 
  --ANIMATION
  local Animate = game.Players.LocalPlayer.Character.Animate
@@ -15732,3 +15749,23 @@ cmd.add({"earthquake"}, {"earthquake", "Makes you jump gently"}, function(...)
 	 wait()
 	 getChar():WaitForChild("HumanoidRootPart").CFrame = old
  end)
+
+local userInputService = game:GetService("UserInputService")
+
+local platform = userInputService:GetPlatform()
+if table.find({Enum.Platform.IOS, Enum.Platform.Android}, platform) then
+    wait()
+    local device
+    if platform == Enum.Platform.IOS then
+        device = "iOS"
+    elseif platform == Enum.Platform.Android then
+        device = "Android"
+    else
+        device = "Unknown"
+    end
+	if device == "Android" or device == "iOS" then
+		Notify({Description = "I see you're on a Mobile Device!\nSo you can just press the Button\nto open the cmd box";Title = "Digital Chaos Admin";Duration = 5;});
+	else
+		Notify({Description = "I see you're on a Computer or Laptop!\nSo you can just press Ctrl on your Keyboard\nto open the cmd box";Title = "Digital Chaos Admin";Duration = 5;});
+	end
+end
