@@ -6673,6 +6673,7 @@ end
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
     workspace.Gravity = 2
     wait(0.075)
+    SetAnim("None")
     game.Players.LocalPlayer.Character.Animate.Disabled = true
     wait(0.05)
     game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
@@ -6688,6 +6689,7 @@ end)
  cmd.add({"unfly"}, {"unfly (unmfly)", "Disable Fly"}, function()
  on = false
  game.Players.LocalPlayer.Character.Animate.Disabled = false
+ SetAnim(fileanimation)
  unmobilefly()
  end)
  
