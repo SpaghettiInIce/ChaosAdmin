@@ -15711,7 +15711,7 @@ LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 			     game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 			 	 wait(0.01)
 			     SetAnim(fileanimation)
-		         writefile("Digital_Chaos_Admin\\Annimations\\Animation.txt", fileanimation)
+		         writefile("Digital_Chaos_Admin\\Animation.txt", fileanimation)
 			     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = oldjp
 			 end
 	     end
