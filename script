@@ -6671,14 +6671,14 @@ end
     on = true
     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 25
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
-    workspace.Gravity = 2
+    game.Workspace.Gravity = 2
     wait(0.075)
     game.Players.LocalPlayer.Character.Animate.Disabled = true
     wait(0.05)
     game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
     wait(0.5)
     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
-    workspace.Gravity = 196.2
+    game.Workspace.Gravity = 196.2
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
     mobilefly(speed)
   end
@@ -6695,14 +6695,14 @@ end)
  cmd.add({"pcfly"}, {"pcfly [speed]", "Enable flight"}, function(...)
  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
  game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 30
- workspace.Gravity = 2
+ game.Workspace.Gravity = 2
  wait(0.075)
  game.Players.LocalPlayer.Character.Animate.Disabled = true
  game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
  wait(0.5)
  game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 11
  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
- workspace.Gravity = 196.2
+ game.Workspace.Gravity = 196.2
  FLYING = false
 	 cmdlp.Character.Humanoid.PlatformStand = false
 	 wait()
