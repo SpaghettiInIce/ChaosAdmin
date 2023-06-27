@@ -12408,7 +12408,7 @@ until glueloop == false
  end)
 
  cmd.add({"gravity", "grav"}, {"gravity <amount> (grav)", "sets game gravity to whatever u want"}, function(...)
- game.Workspace.Gravity = (...)
+ workspace.Gravity = (...)
  end)
 
  cmd.add({"uanograv", "unanchorednograv", "unanchorednogravity"}, {"uanograv (unanchorednograv)", "Makes unanchored parts have 0 gravity"}, function()
@@ -15720,7 +15720,7 @@ LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 
 cmd.add({"earthquake"}, {"earthquake", "Makes you jump gently"}, function(...)
      game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 200
-     game.Workspace.Gravity = 3
+     workspace.Gravity = 3
      game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
      wait(1)
      local hum = character:FindFirstChildWhichIsA("Humanoid")
@@ -15728,7 +15728,7 @@ cmd.add({"earthquake"}, {"earthquake", "Makes you jump gently"}, function(...)
 		 hum.Sit = true
 	 end
      game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
-     game.Workspace.Gravity = 196.2
+     workspace.Gravity = 196.2
      wait(1.5)
      game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 0
      game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
