@@ -138,7 +138,7 @@ end
      writefile("Digital_Chaos_Admin\\Animation.txt", 'Anthro')
  end
 
- local animation = readfile("Digital_Chaos_Admin\\Animation.txt")
+ local fileanimation = readfile("Digital_Chaos_Admin\\Animation.txt")
  
  -- [[ PREFIX AND OTHER STUFF. ]] -- 
  local opt = {
@@ -154,7 +154,6 @@ end
  
  -- [[ Version ]] -- 
  currentversion = "Beta"
- local prefix = opt.prefix 
  
  --[[ VARIABLES ]]--
  PlaceId, JobId = game.PlaceId, game.JobId
@@ -15658,6 +15657,7 @@ local LocalPlayer = Players.LocalPlayer
 local function onCharacterAdded(character)
     -- Character added after respawn
     print("Player has respawned!")
+    wait(1)
     local workspace = game.Workspace
  	Players = game:GetService("Players")
  	local speaker = Players.LocalPlayer
@@ -15674,7 +15674,7 @@ local function onCharacterAdded(character)
 	    if humanoid.RigType == Enum.HumanoidRigType.R15 then
 	        -- Your code here: This code will only execute if the player's RigType is R15
 			wait(0.25)
-		    SetAnim(animation)
+		    SetAnim(fileanimation)
 			game.Players.LocalPlayer.Character.Humanoid.JumpHeight = .001
 			game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 			wait(.1)
@@ -15687,7 +15687,7 @@ if player.Character and player.Character:FindFirstChild("Humanoid") then
     local humanoid = player.Character.Humanoid
     if humanoid.RigType == Enum.HumanoidRigType.R15 then
         -- Your code here: This code will only execute if the player's RigType is R15
-		SetAnim(animation)
+		SetAnim(fileanimation)
 		game.Players.LocalPlayer.Character.Humanoid.JumpHeight = .001
 		game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 		wait(.1)
@@ -15698,20 +15698,20 @@ end
 LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 
  cmd.add({"anim", "animation", "setanim"}, {"anim <id> (animation, setanim", "Change your Animation"}, function(...)
-     animation = (...)
+     fileanimation = (...)
 	 if player.Character and player.Character:FindFirstChild("Humanoid") then
 	 local humanoid = player.Character.Humanoid
 	     if humanoid.RigType == Enum.HumanoidRigType.R15 then
 	         -- Your code here: This code will only execute if the player's RigType is R15
-		     if animation then
+		     if fileanimation then
 			     SetAnim("None")
 			     oldjp = game.Players.LocalPlayer.Character.Humanoid.JumpHeight
 			     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 0.001
 			     wait(0.01)
 			     game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 			 	 wait(0.01)
-			     SetAnim(animation)
-		         writefile("Digital_Chaos_Admin\\Annimations\\Animation.txt", animation)
+			     SetAnim(fileanimation)
+		         writefile("Digital_Chaos_Admin\\Annimations\\Animation.txt", fileanimation)
 			     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = oldjp
 			 end
 	     end
