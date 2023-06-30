@@ -15308,6 +15308,11 @@ TextClickButton.MouseButton1Click:Connect(function()
     end
 end)
 
+local function refreshAnimation()
+    player.AnimationController:Stop()
+    player.AnimationController:Play()
+end
+
 -- Add a new InputBegan event function to handle key presses
 game:GetService("UserInputService").InputBegan:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.RightControl then
@@ -15657,18 +15662,12 @@ local LocalPlayer = Players.LocalPlayer
 local function onCharacterAdded(character)
     -- Character added after respawn
     print("Player has respawned!")
-    wait(0)
     local workspace = game.Workspace
-        Players = game:GetService("Players")
-	local speaker = Players.LocalPlayer
-        workspace.CurrentCamera:remove()
-        wait(0.4)
-        local workspace = game.Workspace
-        Players = game:GetService("Players")
-        local speaker = Players.LocalPlayer
-        workspace.CurrentCamera:remove()
+ 	Players = game:GetService("Players")
+ 	local speaker = Players.LocalPlayer
+ 	workspace.CurrentCamera:remove()
 	wait(.1)
-        workspace.CurrentCamera.CameraSubject = speaker.Character:FindFirstChildWhichIsA('Humanoid')
+	workspace.CurrentCamera.CameraSubject = speaker.Character:FindFirstChildWhichIsA('Humanoid')
 	workspace.CurrentCamera.CameraType = "Custom"
 	speaker.CameraMinZoomDistance = 0.5
 	speaker.CameraMaxZoomDistance = 400
@@ -15679,21 +15678,19 @@ local function onCharacterAdded(character)
 	    if humanoid.RigType == Enum.HumanoidRigType.R15 then
 	        -- Your code here: This code will only execute if the player's RigType is R15
 			wait(0.25)
-		    SetAnim(fileanimation)
-			game.Players.LocalPlayer.Character.Humanoid.JumpHeight = .001
+		    SetAnim(animation)
 			game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 			wait(.1)
-			game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
+   			refreshAnimation()
 	    end
 	end
-    wait(1)
     loadstring(game:HttpGet("https://pastebin.com/raw/ZvL4ptJi"))()
 end
 if player.Character and player.Character:FindFirstChild("Humanoid") then
     local humanoid = player.Character.Humanoid
     if humanoid.RigType == Enum.HumanoidRigType.R15 then
         -- Your code here: This code will only execute if the player's RigType is R15
-		SetAnim(fileanimation)
+		SetAnim(animation)
 		game.Players.LocalPlayer.Character.Humanoid.JumpHeight = .001
 		game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 		wait(.1)
@@ -15704,20 +15701,22 @@ end
 LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 
  cmd.add({"anim", "animation", "setanim"}, {"anim <id> (animation, setanim", "Change your Animation"}, function(...)
-     fileanimation = (...)
+     animation = (...)
 	 if player.Character and player.Character:FindFirstChild("Humanoid") then
 	 local humanoid = player.Character.Humanoid
 	     if humanoid.RigType == Enum.HumanoidRigType.R15 then
 	         -- Your code here: This code will only execute if the player's RigType is R15
-		     if fileanimation then
+		     if animation then
 			     SetAnim("None")
 			     oldjp = game.Players.LocalPlayer.Character.Humanoid.JumpHeight
 			     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 0.001
 			     wait(0.01)
 			     game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 			 	 wait(0.01)
-			     SetAnim(fileanimation)
-		         writefile("Digital_Chaos_Admin\\Animation.txt", fileanimation)
+			     SetAnim(animation)
+        		 wait(0.1)
+           		 refreshAnimation()
+		         writefile("Digital_Chaos_Admin\\Annimations\\Animation.txt", animation)
 			     game.Players.LocalPlayer.Character.Humanoid.JumpHeight = oldjp
 			 end
 	     end
@@ -15726,7 +15725,7 @@ LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 
 cmd.add({"earthquake"}, {"earthquake", "Makes you jump gently"}, function(...)
      game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 200
-     workspace.Gravity = 3
+     game.Workspace.Gravity = 3
      game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
      wait(1)
      local hum = character:FindFirstChildWhichIsA("Humanoid")
@@ -15734,7 +15733,7 @@ cmd.add({"earthquake"}, {"earthquake", "Makes you jump gently"}, function(...)
 		 hum.Sit = true
 	 end
      game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
-     workspace.Gravity = 196.2
+     game.Workspace.Gravity = 196.2
      wait(1.5)
      game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 0
      game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
