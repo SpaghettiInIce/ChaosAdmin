@@ -15667,7 +15667,7 @@ local function onCharacterAdded(character)
  	Players = game:GetService("Players")
  	local speaker = Players.LocalPlayer
  	workspace.CurrentCamera:remove()
-	wait(.1)
+	wait(.3)
 	workspace.CurrentCamera.CameraSubject = speaker.Character:FindFirstChildWhichIsA('Humanoid')
 	workspace.CurrentCamera.CameraType = "Custom"
 	speaker.CameraMinZoomDistance = 0.5
