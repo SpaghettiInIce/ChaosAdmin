@@ -15691,10 +15691,8 @@ if player.Character and player.Character:FindFirstChild("Humanoid") then
     if humanoid.RigType == Enum.HumanoidRigType.R15 then
         -- Your code here: This code will only execute if the player's RigType is R15
 		SetAnim(animation)
-		game.Players.LocalPlayer.Character.Humanoid.JumpHeight = .001
-		game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 		wait(.1)
-		game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
+		refreshAnimation()
     end
 end
 
