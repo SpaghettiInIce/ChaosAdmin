@@ -15309,8 +15309,9 @@ TextClickButton.MouseButton1Click:Connect(function()
 end)
 
 local function refreshAnimation()
-    player.AnimationController:Stop()
-    player.AnimationController:Play()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    character.HumanoidRootPart.Velocity = Vector3.new(0, 0.01, 0)
 end
 
 -- Add a new InputBegan event function to handle key presses
