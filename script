@@ -15759,6 +15759,26 @@ cmd.add({"earthquake"}, {"earthquake", "Makes you jump gently"}, function(...)
 	 getChar():WaitForChild("HumanoidRootPart").CFrame = old
  end)
 
+local function r15(plr)
+	if plr.Character:FindFirstChildOfClass('Humanoid').RigType == Enum.HumanoidRigType.R15 then
+		return true
+	end
+end
+
+cmd.add({"headthrow"}, {"headthrow", "THROW YOUR FUCKING HEAD WTF!?"}, function()
+	if not r15(speaker) then
+		local AnimationId = "35154961"
+		local Anim = Instance.new("Animation")
+		Anim.AnimationId = "rbxassetid://"..AnimationId
+		local k = speaker.Character:FindFirstChildOfClass('Humanoid'):LoadAnimation(Anim)
+		k:Play(0)
+		k:AdjustSpeed(1)
+	end
+end)
+
+cmd.add({"animal"}, {"animal", "Be a Cute little Animal (1 Head accessorie needed!)"}, function()
+    loadstring(game:HttpGet("https://github.com/SpaghettiInIce/BeAPet/tree/main"))()
+end)
 local userInputService = game:GetService("UserInputService")
 
 local platform = userInputService:GetPlatform()
