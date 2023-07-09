@@ -15777,7 +15777,7 @@ cmd.add({"headthrow"}, {"headthrow", "THROW YOUR FUCKING HEAD WTF!?"}, function(
 end)
 
 cmd.add({"animal"}, {"animal", "Be a Cute little Animal (1 Head accessorie needed!)"}, function()
-    loadstring(game:HttpGet("https://github.com/SpaghettiInIce/BeAPet/tree/main"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/SpaghettiInIce/BeAPet/main/script"))()
 end)
 local userInputService = game:GetService("UserInputService")
 
