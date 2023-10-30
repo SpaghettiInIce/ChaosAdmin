@@ -191,7 +191,8 @@ end
  Loopglitch = false
  Watch = false
  local Admin = {}
- local isFlying = "false"  -- New variable to track the flying state
+ local originalWalkSpeed
+ local originalGravity
  local flyingSpeed = 1
  local flyingDampening = 0.85
  local turningFriction = 0.25
@@ -330,6 +331,16 @@ end
 	 end
  end
  
+ function cp(text)
+   local clipBoard = cp or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
+
+   if clipBoard then
+       clipBoard("'" .. text .. "'")
+   else
+       print("Your exploit doesn't have the ability to use the clipboard")
+   end
+ end
+
  -- [[ MORE VARIABLES ]] --
  plr = game.Players.LocalPlayer
  COREGUI = game:GetService("CoreGui")
@@ -360,87 +371,87 @@ end
  end
  end)
  
-local function mobilefly(speed)
-    flyingSpeed = speed or 1
-    flyingSpeed = flyingSpeed * 70 -- Set flyingSpeed to speed * 70 if speed is given or 1 otherwise
-    local controlModule = require(game.Players.LocalPlayer.PlayerScripts:WaitForChild('PlayerModule'):WaitForChild("ControlModule"))
-    local bv = Instance.new("BodyVelocity")
-    bv.Name = "VelocityHandler"
-    bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-    bv.MaxForce = Vector3.new(0,0,0)
-    bv.Velocity = Vector3.new(0,0,0)
+ function mobilefly(speed)
+     flyingSpeed = speed or 1
+     flyingSpeed = flyingSpeed * 70 -- Set flyingSpeed to speed * 70 if speed is given or 1 otherwise
+     local controlModule = require(game.Players.LocalPlayer.PlayerScripts:WaitForChild('PlayerModule'):WaitForChild("ControlModule"))
+     local bv = Instance.new("BodyVelocity")
+     bv.Name = "VelocityHandler"
+     bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+     bv.MaxForce = Vector3.new(0,0,0)
+     bv.Velocity = Vector3.new(0,0,0)
 
-    local bg = Instance.new("BodyGyro")
-    bg.Name = "GyroHandler"
-    bg.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-    bg.MaxTorque = Vector3.new(9e9,9e9,9e9)
-    bg.P = 1000
-    bg.D = 50
+     local bg = Instance.new("BodyGyro")
+     bg.Name = "GyroHandler"
+     bg.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+     bg.MaxTorque = Vector3.new(9e9,9e9,9e9)
+     bg.P = 1000
+     bg.D = 50
 
-    local Signal1
-    Signal1 = game.Players.LocalPlayer.CharacterAdded:Connect(function(NewChar)
-        local bv = Instance.new("BodyVelocity")
-        bv.Name = "VelocityHandler"
-        bv.Parent = NewChar:WaitForChild("Humanoid").RootPart
-        bv.MaxForce = Vector3.new(0,0,0)
-        bv.Velocity = Vector3.new(0,0,0)
+     local Signal1
+     Signal1 = game.Players.LocalPlayer.CharacterAdded:Connect(function(NewChar)
+         local bv = Instance.new("BodyVelocity")
+         bv.Name = "VelocityHandler"
+         bv.Parent = NewChar:WaitForChild("Humanoid").RootPart
+         bv.MaxForce = Vector3.new(0,0,0)
+         bv.Velocity = Vector3.new(0,0,0)
 
-        local bg = Instance.new("BodyGyro")
-        bg.Name = "GyroHandler"
-        bg.Parent = NewChar:WaitForChild("Humanoid").HumanoidRootPart
-        bg.MaxTorque = Vector3.new(9e9,9e9,9e9)
-        bg.P = 1000
-        bg.D = 50
-    end)
+         local bg = Instance.new("BodyGyro")
+         bg.Name = "GyroHandler"
+         bg.Parent = NewChar:WaitForChild("Humanoid").HumanoidRootPart
+         bg.MaxTorque = Vector3.new(9e9,9e9,9e9)
+         bg.P = 1000
+         bg.D = 50
+     end)
 
-    local camera = game.Workspace.CurrentCamera
+     local camera = game.Workspace.CurrentCamera
 
-    local Signal2
-    Signal2 = game:GetService("RunService").RenderStepped:Connect(function()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
+     local Signal2
+     Signal2 = game:GetService("RunService").RenderStepped:Connect(function()
+         if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
 
-            game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.MaxForce = Vector3.new(9e9,9e9,9e9)
-            game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.MaxTorque = Vector3.new(9e9,9e9,9e9)
-            game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
+             game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.MaxForce = Vector3.new(9e9,9e9,9e9)
+             game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.MaxTorque = Vector3.new(9e9,9e9,9e9)
+             game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
 
-            game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame:Lerp(camera.CoordinateFrame, turningFriction)
-            local direction = controlModule:GetMoveVector()
-            local currentVelocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity
-            local targetVelocity = Vector3.new()
-            if direction.X > 0 then
-                targetVelocity = targetVelocity + camera.CFrame.RightVector * (direction.X * flyingSpeed)
-            end
-            if direction.X < 0 then
-                targetVelocity = targetVelocity + camera.CFrame.RightVector * (direction.X * flyingSpeed)
-            end
-            if direction.Z > 0 then
-                targetVelocity = targetVelocity - camera.CFrame.LookVector * (direction.Z * flyingSpeed)
-            end
-            if direction.Z < 0 then
-                targetVelocity = targetVelocity - camera.CFrame.LookVector * (direction.Z * flyingSpeed)
-            end
+             game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame:Lerp(camera.CoordinateFrame, turningFriction)
+             local direction = controlModule:GetMoveVector()
+             local currentVelocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity
+             local targetVelocity = Vector3.new()
+             if direction.X > 0 then
+                 targetVelocity = targetVelocity + camera.CFrame.RightVector * (direction.X * flyingSpeed)
+             end
+             if direction.X < 0 then
+                 targetVelocity = targetVelocity + camera.CFrame.RightVector * (direction.X * flyingSpeed)
+             end
+             if direction.Z > 0 then
+                 targetVelocity = targetVelocity - camera.CFrame.LookVector * (direction.Z * flyingSpeed)
+             end
+             if direction.Z < 0 then
+                 targetVelocity = targetVelocity - camera.CFrame.LookVector * (direction.Z * flyingSpeed)
+             end
 
-            -- Add initial boost to the Y position when starting to fly
-            if currentVelocity == Vector3.new() then
-                initialYBoost = math.min(initialBoost, maxYBoost)
-                targetVelocity = targetVelocity + Vector3.new(0, initialYBoost, 0)
-            end
+             -- Add initial boost to the Y position when starting to fly
+             if currentVelocity == Vector3.new() then
+                 initialYBoost = math.min(initialBoost, maxYBoost)
+                 targetVelocity = targetVelocity + Vector3.new(0, initialYBoost, 0)
+             end
 
-            game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = currentVelocity:Lerp(targetVelocity, 1 - flyingDampening)
-        end
-    end)
-end
+             game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = currentVelocity:Lerp(targetVelocity, 1 - flyingDampening)
+         end
+     end)
+ end
 
-local function unmobilefly()
-    currentVelocity = ""
-    initialYBoost = 0
-    targetVelocity = 0
-    game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler:Destroy()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler:Destroy()
-    game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
-    Signal1:Disconnect()
-    Signal2:Disconnect()
-end
+ function unmobilefly()
+     currentVelocity = ""
+     initialYBoost = 0
+     targetVelocity = 0
+     game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler:Destroy()
+     game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler:Destroy()
+     game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+     Signal1:Disconnect()
+     Signal2:Disconnect()
+ end
 
  function x(v)
 	 if v then
@@ -3653,15 +3664,15 @@ end
  end
 
  cmd.add({"rizzup"}, {"rizzup", "rizz up on people"}, function()
- RandomRizz()
+	 RandomRizz()
  end)
 
  cmd.add({"rizzspam"}, {"rizzspam", "spams rizz lines every 5 seconds"}, function()
- AutoRizz()
+	 AutoRizz()
  end)
 
  cmd.add({"unrizzspam"}, {"unrizzspam", "stop spamming rizz lines"}, function()
- StopAutoRizz()
+	 StopAutoRizz()
  end)
 
  cmd.add({"toolblockspam"}, {"toolblockspam [amount]", "Spawn blocks by the given amount"}, function(amt)
@@ -6520,7 +6531,7 @@ end
  
  cmd.add({"jobid"}, {"jobid", "Copies your job id"}, function()
 	 local jobId = 'Roblox.GameLauncher.joinGameInstance('..PlaceId..', "'..JobId..'")'
-	 setclipboard(jobId)
+	 cp(jobId)
 	 wait();
  
  Notify({
@@ -6814,7 +6825,7 @@ end
 		 
 		 script.Parent.RightPanel.copy.MouseButton1Click:Connect(function()
 			 if currentInfo ~= nil then
-				 setclipboard(currentInfo)
+				 cp(currentInfo)
 			 end
 		 end)
 		 
@@ -6998,11 +7009,6 @@ end
  if on == false then
   speed = (...)
 
-  -- If no speed is provided, set it to 69
-  if speed == nil then
-    speed = 69
-  end
-
   -- Check if the platform is iOS or Android
   if table.find({Enum.Platform.IOS, Enum.Platform.Android}, game:GetService("UserInputService"):GetPlatform()) then 
     wait()
@@ -7018,42 +7024,13 @@ end
  -- Toggle flying on/off based on 'on' variable
   if on == false then
     on = true
-    game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 1
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
-	if player.Character and player.Character:FindFirstChild("Humanoid") then
-	    local humanoid = player.Character.Humanoid
-	    if humanoid.RigType == Enum.HumanoidRigType.R15 then
-	        -- Your code here: This code will only execute if the player's RigType is R15
-		    SetAnim("None")
-	    end
-	end
-    wait(0.05)
-    game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    wait(0.05)
-    game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 25
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
-    game.Workspace.Gravity = 5
-    wait(0.05)
-    game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    wait(0.3)
-    game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 8
-    game.Workspace.Gravity = 196.2
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-    game.Players.LocalPlayer.Character.Animate.Disabled = false
     mobilefly(speed)
-    wait(0.5)
-	if humanoid.RigType == Enum.HumanoidRigType.R15 then
-	    -- Your code here: This code will only execute if the player's RigType is R15
-		wait(0)
-	    SetAnim(fileanimation)
-    end
   end
  end
 end)
  
  cmd.add({"unfly"}, {"unfly (unmfly)", "Disable Fly"}, function()
  on = false
- wait(0.1)
  unmobilefly()
  end)
  
@@ -7369,18 +7346,24 @@ end)
 	 return tools
  end
  
- cmd.add({"fakelag", "flag"}, {"fakelag (flag)", "fake lag"}, function()
+ FakeLagSpeed = 0.05
+ 
+ cmd.add({"fakelag", "flag"}, {"fakelag (flag)", "fake lag"}, function(...)
  FakeLag = true
+ if (...) then
+	 FakeLagSpeed = (...)
+ end
  
  repeat wait()
 	 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-	 wait(0.05)
-	  game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-	  wait(0.05)
+	 wait(FakeLagSpeed)
+	 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+	 wait(FakeLagSpeed)
  until FakeLag == false
  end)
  
  cmd.add({"unfakelag", "unflag"}, {"unfakelag (unflag)", "stops the fake lag command"}, function()
+ FakeLagSpeed = 0.05
  FakeLag = false
  end)
  
@@ -7947,7 +7930,7 @@ game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageReque
  end)
  
  cmd.add({"copygameid", "cgameid"}, {"copygameid (cgameid)", "Copies the id of the game youre in"}, function()
- setclipboard(game.PlaceId)
+ cp(game.PlaceId)
  end)
  
  cmd.add({"lowhold"}, {"lowhold", "Boombox low hold"}, function()
@@ -7979,7 +7962,7 @@ game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageReque
  Duration = 7;
  
  });
- setclipboard(target.Name)
+ cp(target.Name)
  end)
  
  cmd.add({"copydisplay", "cdisplay"}, {"copydisplay <player> (cdisplay)", "Copies the display name of the target"}, function(...)
@@ -7996,7 +7979,7 @@ game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageReque
  Duration = 7;
  
  });
- setclipboard(target.DisplayName)
+ cp(target.DisplayName)
  end)
  
  cmd.add({"nodance", "untooldance"}, {"nodance", "Stop making tools dance"}, function()
@@ -9744,7 +9727,7 @@ getChar().HumanoidRootPart.CFrame = target.Character.Humanoid.RootPart.CFrame
 			 end
 		 end
 	 end
- setclipboard(audios)
+ cp(audios)
  end)
  
  cmd.add({"follow", "stalk", "walk"}, {"follow <player>", "Follow a player wherever they go"}, function(p)
@@ -10199,7 +10182,7 @@ getChar().HumanoidRootPart.CFrame = target.Character.Humanoid.RootPart.CFrame
 			 })
 		 })
 	 end
-	 setclipboard("discord.gg/mW442YxE4j")
+	 cp("discord.gg/mW442YxE4j")
 	 end)
  
  cmd.add({"exit"}, {"exit", "Close down roblox"}, function()
@@ -14798,7 +14781,7 @@ end)
 		 firetouchinterest(target.Character.Humanoid.RootPart,tool.Handle,1)
 	 end)
  
-	 cmd.add({"jp", "jumppower"}, {"jp <number> (jumppower)", "Makes your JumpPower whatever you want"}, function(...)
+	 cmd.add({"jp", }, {"jp <number> (jumppower)", "Makes your JumpPower whatever you want"}, function(...)
 		 game.Players.LocalPlayer.Character.Humanoid.JumpHeight = (...)
 		 end)
  
@@ -15802,6 +15785,55 @@ end)
 cmd.add({"animal"}, {"animal", "Be a Cute little Animal (1 Head accessorie needed!)"}, function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/SpaghettiInIce/BeAPet/main/script"))()
 end)
+
+cmd.add({"xyz"}, {"xyz <X> <Y> <Z>", "Teleport to specified coordinates"}, function(args)
+    -- Get the local player
+    local localPlayer = game:GetService("Players").LocalPlayer
+
+    -- Check if the command has the correct number of arguments
+    if #args ~= 3 then
+        print("Invalid number of arguments. Usage: xyz <X> <Y> <Z>")
+        return
+    end
+
+    -- Parse the X, Y, and Z values from the command arguments
+    local newX = tonumber(args[1])
+    local newY = tonumber(args[2])
+    local newZ = tonumber(args[3])
+
+    -- Check if the arguments are valid numbers
+    if not newX or not newY or not newZ then
+        print("Invalid coordinates. Usage: xyz <X> <Y> <Z>")
+        return
+    end
+
+    -- Set the position of the local player to the specified coordinates
+    localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(newX, newY, newZ)
+end)
+
+cmd.add({"cmdx"}, {"cmdx", "Cmd-X"}, function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source",true))()
+end)
+cmd.add({"fats"}, {"fates", "Fates Admin"}, function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/fatesc/fates-admin/main/main.lua"))();
+end)
+cmd.add({"legadmin"}, {"legadmin", "Leg Admin v2"}, function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/leg1337/legadmv2/main/legadminv2.lua'))()
+end)
+cmd.add({"loopanimspeed"}, {"loopanimspeed", "Modify Animation Speed"}, function(...)
+    local animspeedv = (...)
+	wait = task.wait
+	local a = game:GetService("Players").LocalPlayer.Character or game:GetService("Players").LocalPlayer.CharacterAdded:wait()
+
+	while wait() do
+	    local b = a:FindFirstChildOfClass("Humanoid") or a:FindFirstChildOfClass("AnimationController")
+	    if not b or not a then continue end
+	    for c, d in next, b:GetPlayingAnimationTracks() do
+	        d:AdjustSpeed(animspeedv)
+	    end
+	end
+end)
+
 local userInputService = game:GetService("UserInputService")
 
 local platform = userInputService:GetPlatform()
