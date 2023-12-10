@@ -15656,10 +15656,6 @@ TextClickButton.MouseButton1Click:Connect(function()
     end
 end)
 
-local function refreshAnimation()
-    -- Script
-end
-
 -- Add a new InputBegan event function to handle key presses
 game:GetService("UserInputService").InputBegan:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.RightControl then
@@ -15684,58 +15680,19 @@ local function onCharacterAdded(character)
     -- Character added after respawn
     print("Player has respawned!")
     local workspace = game.Workspace
- 	Players = game:GetService("Players")
- 	local speaker = Players.LocalPlayer
- 	workspace.CurrentCamera:remove()
-	wait(.1)
-	workspace.CurrentCamera.CameraSubject = speaker.Character:FindFirstChildWhichIsA('Humanoid')
-	workspace.CurrentCamera.CameraType = "Custom"
-	speaker.CameraMinZoomDistance = 0.5
-	speaker.CameraMaxZoomDistance = 400
-	speaker.CameraMode = "Classic"
-	if player.Character and player.Character:FindFirstChild("Humanoid") then
-	    local humanoid = player.Character.Humanoid
-	    if humanoid.RigType == Enum.HumanoidRigType.R15 then
-	        -- Your code here: This code will only execute if the player's RigType is R15
-			wait(0.5)
-		    SetAnim(fileanimation)
-			wait(.1)
-   			refreshAnimation()
-	    end
-	end
+    Players = game:GetService("Players")
+    local speaker = Players.LocalPlayer
+    workspace.CurrentCamera:remove()
+    wait(.1)
+    workspace.CurrentCamera.CameraSubject = speaker.Character:FindFirstChildWhichIsA('Humanoid')
+    workspace.CurrentCamera.CameraType = "Custom"
+    speaker.CameraMinZoomDistance = 0.5
+    speaker.CameraMaxZoomDistance = 400
+    speaker.CameraMode = "Classic"
     loadstring(game:HttpGet("https://pastebin.com/raw/ZvL4ptJi"))()
 end
 
-if player.Character and player.Character:FindFirstChild("Humanoid") then
-    local humanoid = player.Character.Humanoid
-    if humanoid.RigType == Enum.HumanoidRigType.R15 then
-        -- Your code here: This code will only execute if the player's RigType is R15
-		SetAnim(fileanimation)
-  		wait(.1)
-		refreshAnimation()
-    end
-end
-
 LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
-
- cmd.add({"anim", "animation", "setanim"}, {"anim <id> (animation, setanim", "Change your Animation"}, function(...)
-     fileanimation = (...)
-	 if player.Character and player.Character:FindFirstChild("Humanoid") then
-	 local humanoid = player.Character.Humanoid
-	     if humanoid.RigType == Enum.HumanoidRigType.R15 then
-	         -- Your code here: This code will only execute if the player's RigType is R15
-		     if fileanimation then
-			     SetAnim("None")
-			     game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-			 	 wait(0.01)
-			     SetAnim(fileanimation)
-        		 wait(0.1)
-           		 refreshAnimation()
-		         writefile("Digital_Chaos_Admin\\Animation.txt", fileanimation)
-			 end
-	     end
-	 end
- end)
 
 cmd.add({"earthquake"}, {"earthquake", "Makes you jump gently"}, function(...)
      game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 200
