@@ -112,8 +112,8 @@ enterButton.MouseButton1Click:Connect(function()
     processKey(textField.Text)
 end)
 
-while not correctKey do
-    wait()
+if gui then
+    gui:Destroy()
 end
 
 -- Your script that needs to run after the correct key is entered
